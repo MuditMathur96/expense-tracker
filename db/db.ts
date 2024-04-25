@@ -259,7 +259,7 @@ export const editCategory = async(data:Category)
                     :Promise<IFuncReturnType<Boolean>>=>{
 
     try{
-        //console.log("before doc func");
+        console.log("before updating category",data);
         const expense_collection = doc(db,CATEGORY_DB,data.categoryId!);
        // console.log("before add func");
         await setDoc(expense_collection,{...data});

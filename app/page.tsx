@@ -5,7 +5,7 @@ import { addCategory, addExpense, getCategory, getExpenses } from "@/db/db";
 import Image from "next/image";
 import { useEffect } from "react";
 
-
+export const revalidate = 0;
 
 export default async function Home() {
   let expenseData = await getExpenses("random user2");

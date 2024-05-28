@@ -6,6 +6,7 @@ import CategoryItem from './category-items'
 import useExpenseStore from '@/store/useExpenseStore'
 import AddCategory from './add-category'
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '../ui/table'
+import { useAuth } from '@clerk/nextjs'
 
 type Props = {
     categories:Category[]
@@ -14,9 +15,10 @@ type Props = {
 function CategoryList({categories}: Props) {
 
     const addCategoryState = useExpenseStore(state=>state.addCategory);
+    const {isLoaded,userId} = useAuth();
   return (
     <div>
-      <AddCategory />
+      <AddCategory userId={userId!}/>
       <Table>
             <TableCaption>A list of all categories</TableCaption>
             <TableHeader>

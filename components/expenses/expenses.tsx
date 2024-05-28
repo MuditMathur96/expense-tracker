@@ -1,6 +1,6 @@
 "use client"
-import { getExpenses } from '@/db/db'
-import React, { useEffect } from 'react'
+import { getCategory, getExpenses } from '@/db/db'
+import React, { useCallback, useEffect } from 'react'
 import ExpenseItem from './expense-item';
 import ExpenseList from './expense-list';
 import { Category, Expense } from '@/types';
@@ -9,22 +9,36 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CategoryList from '../categories/category-list';
 import Heading from '../shared/heading';
 import ExpenseAnalyticsMonthly from '../analytics/expense-analytics-monthly';
+import { useAuth } from '@clerk/nextjs';
+import { Circle } from 'lucide-react';
+import Loading from '@/app/loading';
 
 type Props = {
-    expenses:Expense[],
-    categories:Category[]
+    
 }
 
 
-function Expenses({expenses,categories}: Props) {
+function Expenses({}: Props) {
 
   const {setExpenses,setCategory} = useExpenseStore(state=>state);
   const categoryState = useExpenseStore(state=>state.categories);
   const expenseState = useExpenseStore(state=>state.expenses);
+  const { isLoaded,userId} = useAuth();
+
+  const fetchData = useCallback(async(userId:string)=>{
+    console.log("userId =>",userId);
+    const expenses = await getExpenses(userId!);
+    const categories = await getCategory(userId!);
+    setExpenses(expenses.data || []);
+  setCategory(categories.data || []);
+},[]); 
   useEffect(()=>{
-    setExpenses(expenses);
-    setCategory(categories);
-},[]);
+    if(isLoaded && userId) fetchData(userId);
+},[isLoaded,userId]);
+
+  if(!isLoaded && !userId) return (<div>
+    <Loading />
+  </div>)
 
 
   return (
@@ -48,7 +62,7 @@ function Expenses({expenses,categories}: Props) {
            </Tabs>
 
         </div>
-       {expenseState.length>0 &&  <div className='min-h-[50vh] '>
+       {expenseState.length>0 && userId &&  <div className='min-h-[50vh] '>
           <Heading>Summary:</Heading>
           <ExpenseAnalyticsMonthly
           expenses={expenseState}

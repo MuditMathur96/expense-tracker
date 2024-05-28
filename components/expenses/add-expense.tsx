@@ -9,9 +9,11 @@ import { Input } from '../ui/input';
 import { Expense } from '@/types';
 
 
-type Props = {}
+type Props = {
+    userId:string
+}
 
-function AddExpense({}: Props) {
+function AddExpense({userId}: Props) {
     const addExpenseState = useExpenseStore(state=>state.addExpense);
     const categories = useExpenseStore(state=>state.categories);
     const [loading,setLoading] = useState<boolean>(false);
@@ -19,7 +21,7 @@ function AddExpense({}: Props) {
     const [inputData,setInputData] = useState<Expense>({
         title:"",
         price:0,
-        createdBy:"random user2",
+        createdBy:userId,
         categoryId:""
         
     })
@@ -45,7 +47,7 @@ function AddExpense({}: Props) {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
 
-                <Button>Add Expense</Button>
+                <Button disabled={!userId}>Add Expense</Button>
             </DialogTrigger>
 
             <DialogContent >

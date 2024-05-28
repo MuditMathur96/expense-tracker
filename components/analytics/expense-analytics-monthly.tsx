@@ -32,7 +32,7 @@ const ExpenseAnalyticsMonthly = ({expenses}:Props)=>{
 
         Object.keys(memo).forEach((key)=>{
             const category= categories.find((cat)=>cat.categoryId === key);
-            finalData.push({
+            category && finalData.push({
                 name:category?.title!,
                 value:memo[key],
                 color:category?.color || ""
@@ -43,7 +43,7 @@ const ExpenseAnalyticsMonthly = ({expenses}:Props)=>{
         return finalData;
 
 
-    },[expenses]);
+    },[expenses,categories]);
     console.log("== pie data ==",pieData);
 
    return <ResponsiveContainer
@@ -65,7 +65,7 @@ const ExpenseAnalyticsMonthly = ({expenses}:Props)=>{
             {
                pieData.map((d)=>(<Cell 
                key={d.name}
-               fill={d.color}
+               fill={d?.color || ""}
                />))
             }
         </Pie>

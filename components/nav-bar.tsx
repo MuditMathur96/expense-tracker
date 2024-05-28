@@ -16,7 +16,7 @@ const authRoutes =[
 const userRoutes =[
   {
     title:"Reminder",
-    href:"/reminder"
+    href:"/reminders"
   },
 ]
 

@@ -72,7 +72,7 @@ function EditCategory({category}: Props) {
                         <label htmlFor='title'>Color</label>
                         <Input
                         className='w-12 h-10'
-                        value={inputData.color}
+                        value={inputData?.color || ""}
                         onChange={handleInputChange}
                         type="color"
                         name="color"

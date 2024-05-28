@@ -5,6 +5,7 @@ import ExpenseItem from './expense-item'
 import useExpenseStore from '@/store/useExpenseStore'
 import AddExpense from './add-expense'
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '../ui/table'
+import { useAuth } from '@clerk/nextjs'
 
 type Props = {
     expenses:Expense[]
@@ -14,6 +15,7 @@ type Props = {
 function ExpenseList({expenses}: Props) {
   
   const {expenses:stateExpense,addExpense:stateAddExpense} = useExpenseStore(state=>state);
+  const {isLoaded,userId} = useAuth();
 
   const total = useMemo(()=>{
     return stateExpense.reduce((total,exp)=>total+(+exp.price),0);
@@ -26,7 +28,9 @@ function ExpenseList({expenses}: Props) {
         <div 
         className='flex items-center justify-between'
         >
-          <AddExpense />
+          <AddExpense 
+          userId={userId!}
+          />
           <div 
           className='px-4 text-gray-600'
           >

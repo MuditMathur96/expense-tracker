@@ -9,16 +9,18 @@ import { Input } from '../ui/input';
 import { Category, Expense } from '@/types';
 
 
-type Props = {}
+type Props = {
+    userId:string | undefined
+}
 
-function AddCategory({}: Props) {
+function AddCategory({userId}: Props) {
     const addCategoryState = useExpenseStore(state=>state.addCategory);
     const [isOpen,setIsOpen] = useState<boolean>(false);
     const [loading,setLoading] = useState<boolean>(false);
     const categories = useExpenseStore(state=>state.categories);
     const [inputData,setInputData] = useState<Category>({
         title:"",
-        createdBy:"random user2",
+        createdBy:userId!,
         color:""
         
     })
@@ -46,7 +48,7 @@ function AddCategory({}: Props) {
             asChild
             >
 
-                <Button>Add Category</Button>
+                <Button disabled={!userId}>Add Category</Button>
             </DialogTrigger>
 
             <DialogContent >

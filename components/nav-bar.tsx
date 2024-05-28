@@ -1,6 +1,8 @@
 "use client"
 import React from 'react'
 import NavItem from './nav-items'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignIn } from '@clerk/clerk-react'
 
 
 type Props = {}
@@ -26,10 +28,14 @@ function NavBar({}: Props) {
     flex items-center justify-between
     p-4
     h-16'>
-        <div><NavItem 
-        href={"/"}
-        title="User"
-        /></div>
+        <div>
+          <SignedIn>
+          <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+        </div>
         <div>
           {
             routes.map((route)=><NavItem 

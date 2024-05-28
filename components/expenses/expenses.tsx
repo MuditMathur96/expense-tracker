@@ -62,7 +62,7 @@ function Expenses({}: Props) {
            </Tabs>
 
         </div>
-       {expenseState.length>0 &&  <div className='min-h-[50vh] '>
+       {expenseState.length>0 && userId &&  <div className='min-h-[50vh] '>
           <Heading>Summary:</Heading>
           <ExpenseAnalyticsMonthly
           expenses={expenseState}

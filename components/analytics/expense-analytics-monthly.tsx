@@ -35,7 +35,7 @@ const ExpenseAnalyticsMonthly = ({expenses}:Props)=>{
             finalData.push({
                 name:category?.title!,
                 value:memo[key],
-                color:category!.color || ""
+                color:category?.color || ""
 
             })
         });

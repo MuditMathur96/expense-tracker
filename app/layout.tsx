@@ -22,7 +22,7 @@ export default function RootLayout({
 
       <html lang="en">
         <body className={`${inter.className}  mx-auto min-w-screen min-h-screen`}>
-          <div className="sm:px-6 md:px-0 max-w-6xl mx-auto">
+          <div className="px-4 lg:px-0 max-w-6xl mx-auto">
           
           {children}
           </div>

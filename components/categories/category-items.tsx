@@ -1,15 +1,35 @@
 "use client"
 import { Category } from '@/types'
-import React from 'react'
+import React, { useState } from 'react'
 import { TableCell, TableRow } from '../ui/table'
 import { Edit, Trash } from 'lucide-react'
 import EditCategory from './edit-category'
+import { deleteCategory } from '@/db/db'
+import useExpenseStore from '@/store/useExpenseStore'
 
 type Props = {
   category:Category
 }
 
 function CategoryItem({category}: Props) {
+
+  const deleteCategoryFromState = useExpenseStore(state=>state.deleteCategory);
+  const [loading,setLoading] = useState<boolean>(false);
+
+  const handleDelete = async(categoryId:string)=>{
+        setLoading(true);
+        try{
+          const result = await deleteCategory(categoryId);
+          if(result.error) return;
+        }catch{
+
+        }finally{
+
+          deleteCategoryFromState(categoryId);
+        }
+       
+  }
+
   return (
     <TableRow className=''>
     <TableCell className=''>
@@ -28,7 +48,10 @@ function CategoryItem({category}: Props) {
           <EditCategory 
           category={category}
           />
-          <button><Trash  width={"20px"} height={"20px"}  /></button>
+        {!loading &&  <button
+          disabled={loading}
+          onClick={()=>handleDelete(category.categoryId!)}
+          ><Trash  width={"20px"} height={"20px"}  /></button>}
         </div>
     </TableCell>
     

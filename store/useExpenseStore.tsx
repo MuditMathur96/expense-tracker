@@ -1,4 +1,4 @@
-import { Category, Expense } from "@/types";
+import { Category, Expense, Reminder } from "@/types";
 import { create } from "zustand";
 
 type Store={
@@ -15,6 +15,13 @@ type Store={
     deleteCategory:(data:string)=>void,
 
 
+    reminders: Reminder[],
+    addReminder:(data:Reminder)=>void,
+    setReminder:(data:Reminder[])=>void,
+    updateReminder:(data:Reminder) =>void,
+    deleteReminder:(data:string)=>void,
+
+
 
 
 }
@@ -22,8 +29,13 @@ type Store={
 
 const useExpenseStore = create<Store>((set)=>({
 
+    // Initial States
     expenses:[],
     categories:[],
+    reminders:[],
+
+    //expenses
+    //#region 
     setExpenses:(data)=>set((state)=>({
         expenses:data
     })),
@@ -35,11 +47,37 @@ const useExpenseStore = create<Store>((set)=>({
     deleteExpense:(id)=>set((state)=>({
         expenses:state.expenses.filter((exp)=>exp.expenseId!== id)
     })),
+    //#endregion
 
+
+    //reminders
+    //#region 
+    setReminder:(data)=>set((state)=>({
+        reminders:data
+    })),
+   updateReminder:(data)=>set((state)=>{
+    return {
+        reminders:state.reminders.map((cat)=>{
+            if(cat.reminderId === data.reminderId){
+                return data;
+            }else return cat;
+        })
+    }
+   }),
+
+    addReminder:(data)=>set((state)=>({
+        reminders:[...state.reminders,data]
+    })),
+
+    deleteReminder:(id)=>set((state)=>({
+        reminders:state.reminders.filter((rem)=>rem.reminderId!==id)
+    })),
+    //#endregion
 
     //categories
+    //#region 
     setCategory:(data)=>set((state)=>({
-        categories:data
+         categories:data
     })),
    updateCategory:(data)=>set((state)=>{
     return {
@@ -58,6 +96,7 @@ const useExpenseStore = create<Store>((set)=>({
     deleteCategory:(id)=>set((state)=>({
         categories:state.categories.filter((exp)=>exp.categoryId!== id)
     }))
+    //#endregion
 
 
 

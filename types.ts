@@ -23,10 +23,14 @@ export type Reminder ={
     reminderId?:string,
     title:string,
     categoryId:string,
-    price:string,
+    price:number,
     completed?:boolean,
-    lastDate?:string
+    lastDay:number,
+    createdBy:string,
+    createdAt?:string,
+
 }
+
 
 export type IFuncReturnType<T> ={
     error: string | null,

@@ -12,6 +12,7 @@ import ExpenseAnalyticsMonthly from '../analytics/expense-analytics-monthly';
 import { useAuth } from '@clerk/nextjs';
 import { Circle } from 'lucide-react';
 import Loading from '@/app/loading';
+import { getReminders } from '@/db/reminer.db';
 
 type Props = {
     
@@ -27,8 +28,11 @@ function Expenses({}: Props) {
 
   const fetchData = useCallback(async(userId:string)=>{
     console.log("userId =>",userId);
-    const expenses = await getExpenses(userId!);
-    const categories = await getCategory(userId!);
+    const expensesPromise =  getExpenses(userId!);
+    const categoriesPromise =  getCategory(userId!);
+    const remindersPromise =  getReminders(userId!);
+
+    const [expenses,categories,reminders] = await Promise.all([expensesPromise,categoriesPromise,remindersPromise])
     setExpenses(expenses.data || []);
   setCategory(categories.data || []);
 },[]); 

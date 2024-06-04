@@ -118,67 +118,7 @@ export const deleteExpense = async(data:string)
 
 }
 
-export const addReminder = async(data:Reminder)
-                    :Promise<IFuncReturnType<string>>=>{
 
-    try{
-
-
-
-
-
-
-
-
-
-        return {
-            data:"",
-            error:null
-        }
-
-    }catch(e:any){
-        return {
-            data:null,
-            error:e.message
-        }
-    }
-
-
-
-
-
-}
-
-export const deleteReminder = async(data:string)
-                    :Promise<IFuncReturnType<string>>=>{
-
-    try{
-
-        
-
-
-
-
-
-
-
-        return {
-            data:"",
-            error:null
-        }
-
-    }catch(e:any){
-        return {
-            data:null,
-            error:e.message
-        }
-    }
-
-
-
-
-
-}
 
 
 export const getCategory = async(userId:string)
